@@ -2,8 +2,6 @@ from functools import partial
 import jax
 import jax.numpy as jnp
 import jax.random as jr
-import jax.tree_util as jtu
-from flax import struct
 from qdax.core.map_elites import EmitterState, Emitter, MapElitesRepertoire, MAPElites as BaseME
 from qdax.core.emitters.standard_emitters import MixingEmitter as MixingEmitterBase
 from qdax.core.emitters.cma_opt_emitter import CMAOptimizingEmitter as CMAOptEmitterBase
@@ -15,95 +13,11 @@ from qdax.core.emitters.omg_mega_emitter import (
 from qdax.core.containers.mapelites_repertoire import compute_cvt_centroids
 from qdax.types import Centroid, Metrics, Genotype, Fitness, Descriptor, ExtraScores, RNGKey
 from typing import Callable, Dict, Optional, Tuple, Type, Union
-from jaxtyping import Array, Float, PyTree
-from src.utils import Tensor, tree_select
+from jaxtyping import Array, Float
 
 
 def _dummy_scoring_fn(_: Genotype, k: RNGKey) -> Tuple[Fitness, Descriptor, ExtraScores, RNGKey]:
     return jnp.empty((1,)), jnp.empty((1,)), {'dummy': jnp.empty((1,))}, k
-
-
-#----------------------------------------- Categorical Repertoire ---------------------------------
-
-class CategoricalRepertoire(struct.PyTreeNode):
-    genotypes: PyTree
-    fitnesses: Tensor
-
-    @property
-    def centroids(self):
-        return jnp.arange(self.genotypes.shape[0])[..., None]
-
-    @property
-    def descriptors(self):
-        return jnp.arange(self.genotypes.shape[0])[..., None]
-
-    @classmethod
-    def init(
-        cls,
-        genotypes: Genotype,
-        descriptors: Descriptor,
-        fitnesses: Fitness,
-        centroids: Centroid,  # in this case these are just the classes
-        extra_scores: ExtraScores
-    ):
-        repertoire = cls.init_default(centroids.shape[0], jtu.tree_map(lambda x: x.shape[1:], genotypes))
-        return repertoire.add(genotypes, descriptors, fitnesses, extra_scores)
-
-    @classmethod
-    def init_default(
-        cls,
-        n_categories: int,
-        genotype_dim: PyTree,
-        k_best: int = 1,
-    ):
-        if k_best > 1:
-            raise NotImplementedError
-
-        is_tuple_of_ints = lambda x: isinstance(x, tuple) and \
-            all(list(map(lambda y: isinstance(y, int), x)))
-
-        archive = jtu.tree_map(
-            lambda shape: jnp.zeros((n_categories, *shape)),
-            genotype_dim,
-            is_leaf=is_tuple_of_ints
-        )
-        scores = -jnp.inf * jnp.ones(shape=n_categories)
-        return cls(archive, scores)
-
-    def add(
-        self,
-        genotypes: Genotype,
-        descriptors: Descriptor,
-        fitnesses: Fitness,
-        extra_scores: ExtraScores
-    ):
-        classes = descriptors[..., 0]  # since there is one descriptor
-        archive_scores = self.fitnesses[classes]
-
-        to_update = (fitnesses > archive_scores)
-        genotype_update = jnp.where(
-            to_update[..., None],
-            genotypes,    # type: ignore
-            tree_select(self.genotypes, classes)
-        )
-        score_update = jnp.where(to_update, fitnesses, archive_scores)
-
-        new_archive = jtu.tree_map(lambda x, y: x.at[classes].set(y), self.genotypes, genotype_update)
-        new_scores = self.fitnesses.at[classes].set(score_update)
-
-        return CategoricalRepertoire(new_archive, new_scores)
-
-    @partial(jax.jit, static_argnames=("num_samples",))
-    def sample(self, random_key: RNGKey, num_samples: int) -> Tuple[Genotype, RNGKey]:
-        random_key, subkey = jax.random.split(random_key)
-
-        repertoire_empty = self.fitnesses == -jnp.inf
-        p = (1.0 - repertoire_empty) / jnp.sum(1.0 - repertoire_empty)
-
-        indices = jr.choice(subkey, jnp.arange(len(self.fitnesses)), shape=(num_samples,), p=p)
-        samples = tree_select(self.genotypes, indices)
-
-        return samples, random_key
 
 
 #------------------------------------------- Emitters ---------------------------------------------

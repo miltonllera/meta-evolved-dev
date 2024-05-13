@@ -1,4 +1,0 @@
-imagenet_examples:
-  _target_: src.analysis.imagenet.plot_examples_for_class
-  _partial_: true
-  save_dir: "${run_path}/analysis/${checkpoint_file}/examples/"

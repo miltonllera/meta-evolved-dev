@@ -12,7 +12,8 @@ defaults:
 
   - /callbacks@callbacks.best_checkpoint: best_checkpoint
   - /callbacks@callbacks.periodic_checkpoint: periodic_checkpoint
-  - override /logger: wandb
+  # - override /logger: wandb
+
   - _self_
 
 
@@ -70,7 +71,7 @@ callbacks:
       _target_: src.evo.utils.ModelFromState
       member_to_extract: "mean"
 
-logger:
-  wandb:
-    project: level-generation
-    name: simple-level_control${now:%Y-%m-%d}_${now:%H-%M}
+# logger:
+#   tensorboard:
+#     project: level-generation
+#     name: simple-level_control${now:%Y-%m-%d}_${now:%H-%M}

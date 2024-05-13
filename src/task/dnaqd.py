@@ -9,13 +9,11 @@ from jaxtyping import PyTree, Float, Array
 from qdax.types import Centroid
 from qdax.utils.metrics import default_qd_metrics
 
-from src.problem.base import QDProblem, GoalDirectedSearch
-from src.problem.catgen import CategoricalQDProblem
+from src.problem.base import QDProblem
 from src.task.base import Task
 from src.model.base import FunctionalModel
 from src.nn.dna import DNAGenerator
 from src.evo.qd import (
-    CategoricalRepertoire,
     MapElitesRepertoire,
     MAPElites,
     OneShotMapElites,
@@ -326,69 +324,3 @@ class ZeroShotQDSearchDNA(QDSearchDNA):
         )
 
         return (dnas, *phenotypes), mpe_state, (scores, metrics), final_state
-
-
-class DNACategoryQD(QDSearchDNA):
-    def __init__(
-        self,
-        problem: CategoricalQDProblem,
-        qd_algorithm: MAPElites,
-        popsize: int,
-        n_iters: int,
-        score_aggregator: Optional[QDScoreAggregator] = None,
-    ) -> None:
-        if score_aggregator is None:
-            score_aggregator = QDScoreAggregator(qd_score_x_coverage)
-
-        assert qd_algorithm.repertoire_cls == CategoricalRepertoire
-
-        self.problem = problem
-        self.qd_algorithm = qd_algorithm
-        self.n_iters = n_iters
-        self.popsize = popsize
-        self.score_aggregator = score_aggregator
-
-    @property
-    def mode(self):
-        return 'max'
-
-    def init(self, stage, categories, key):
-        # return the number of classes which for categorical QD problem is the descriptor length
-        if stage == "train" or categories is None:
-            categories = jnp.arange(self.problem.descriptor_max_val[0])
-        return categories
-
-
-#---------------------------------------- Goal DNA search -----------------------------------------
-
-class DNATargetSearch(Task):
-    def __init__(
-        self,
-        problem: GoalDirectedSearch,
-    ) -> None:
-        self.problem = problem
-
-    @property
-    def mode(self):
-        return 'min'
-
-    def init(self, stage, state, key):
-        return None
-
-    def eval(self, model, state: PyTree, key: jax.Array):
-        _, (error, metrics) = self.predict(model, state, key)
-        return error, (None,  {'error': error} | metrics)
-
-    def validate(self, model, state: PyTree, key: jax.Array):
-        _, (error, metrics) = self.predict(model, state, key)
-        return {'error': error} | metrics , None
-
-    def predict(
-        self,
-        model: FunctionalModel,
-        state: PyTree,
-        key: jax.Array,
-    ):
-        output, dev_states = model(key)
-        error, metrics = self.problem(output)  # type: ignore
-        return (model.dna, output, dev_states), (error, metrics)  # type: ignore
