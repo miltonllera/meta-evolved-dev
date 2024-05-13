@@ -1,0 +1,2 @@
+_target_: ${get_fn:src.nn.embedding.linalg_norm}
+_partial_: true

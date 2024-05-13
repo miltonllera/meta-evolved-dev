@@ -1,0 +1,3 @@
+_target_: src.nn.ca.ConstantContextEncoder
+state_size: ${..state_size}
+grid_size: ???

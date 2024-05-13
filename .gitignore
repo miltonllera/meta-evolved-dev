@@ -1,0 +1,6 @@
+__pycache__
+/data/*/
+/plots/
+train.log
+*.log
+wandb/

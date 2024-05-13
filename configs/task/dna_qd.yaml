@@ -1,0 +1,17 @@
+defaults:
+  - /qd@qd_algorithm: ga_map_elites
+  # - /qd@qd_algorithm: cmame  #TODO: FIND A WAY TO PROPERLY OVERRIDE THIS
+
+_target_: src.task.dnaqd.QDSearchDNA
+
+popsize: 100
+n_iters: 10
+n_centroids: 1000
+n_centroid_samples: null
+
+score_aggregator: null  # default aggregates qd_score and coverage
+
+problem: ???
+qd_algorithm:
+  emitter:
+    batch_size: ${task.popsize}

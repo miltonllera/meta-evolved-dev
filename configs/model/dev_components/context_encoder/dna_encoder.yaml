@@ -1,0 +1,6 @@
+_target_: src.nn.dna.DNAContextEncoder
+alphabet_size: ???
+sequence_length: ???
+embedding_size: 16
+input_is_distribution: False
+key: ${prng_key:}

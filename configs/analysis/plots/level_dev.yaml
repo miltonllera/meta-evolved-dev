@@ -1,0 +1,5 @@
+level_generation_gifs:
+  _target_: src.analysis.levelgen.plot_level_dev_gif
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}/generated_levels/"
+  iterations_to_plot: null

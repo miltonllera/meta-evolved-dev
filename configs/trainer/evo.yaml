@@ -1,0 +1,8 @@
+_target_: src.trainer.evo.EvoTrainer
+
+steps: 10000
+val_steps: 100
+val_freq: 1000
+
+task: ???
+strategy: ???

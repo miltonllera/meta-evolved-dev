@@ -1,0 +1,8 @@
+dna_measure_projection:
+  _target_: src.analysis.dna.dna_measure_projection
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}/dna_measure_projection/"
+  iterations_to_plot: null
+  proj_kwargs:
+    perplexity: 20
+    learning_rate: 5

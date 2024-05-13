@@ -1,0 +1,6 @@
+defaults:
+  - base
+
+strategy: SNES
+args:
+  sigma_init: 0.01

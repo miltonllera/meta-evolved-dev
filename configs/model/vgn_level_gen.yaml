@@ -1,0 +1,20 @@
+defaults:
+  - vector_guided_nca
+  - _self_
+
+dev:
+  dev_steps: 50
+  state_size: 9
+  grid_size: ???  # set in each experiment
+  update_prob: 0.5
+  output_dev_steps: False
+
+  output_decoder:
+    _target_: src.nn.ca.SliceOutput
+    dim: 0
+    start_idx: 0
+    end_idx: 1
+    squashing_function:
+      _target_: jax.numpy.argmax
+      _partial_: True
+      axis: 0

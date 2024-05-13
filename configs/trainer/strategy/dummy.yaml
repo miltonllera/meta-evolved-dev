@@ -1,0 +1,6 @@
+defaults:
+  - base
+
+strategy: Dummy_ES
+args:
+  popsize: 1

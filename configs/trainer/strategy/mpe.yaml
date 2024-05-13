@@ -1,0 +1,13 @@
+_target_: src.evo.qd.MapElitesEs
+_partial: True
+n_centroids: 100,
+n_descriptors: ???,
+descriptor_min_val: ???
+descriptor_max_val: ???
+
+emitter: null
+
+metrics_function:
+  _target_: qdax.utils.metrics.default_qd_metrics
+  _partial_: True
+  qd_offset: 0  # this is problem dependant. should be set so that qd scores are positive

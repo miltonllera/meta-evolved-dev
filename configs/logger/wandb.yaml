@@ -1,0 +1,8 @@
+wandb:
+  _target_: src.trainer.logger.WandBLogger
+  project: ???
+  notes: ""
+  tags: ${tags}
+  run_folder: ${paths.output_dir}
+  log_artifacts: False
+  verbose: False

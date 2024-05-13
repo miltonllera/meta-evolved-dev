@@ -1,0 +1,6 @@
+map_elites_repertoire_plots:
+  _target_: src.analysis.qd.plot_2d_repertoire
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}/repertoires/"
+  iterations_to_plot: [1, 5, 10]
+  plot_separately: False

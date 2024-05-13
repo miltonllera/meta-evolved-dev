@@ -1,0 +1,5 @@
+_target_: src.nn.dna.DNAIndependentSampler
+sequence_length: ???
+alphabet_size: ???
+return_raw_probabilities: False
+key: ${prng_key:}

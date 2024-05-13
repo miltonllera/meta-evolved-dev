@@ -1,0 +1,3 @@
+_target_: qdax.core.emitters.mutation_operators.polynomial_crossover
+_partial_: True
+proportion_var_to_change: 0.5

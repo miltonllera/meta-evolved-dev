@@ -1,0 +1,5 @@
+_target_: src.evo.qd.OMGMEGAEmitter
+
+batch_size: 100
+sigma_g: 1.0
+num_descriptors: 2

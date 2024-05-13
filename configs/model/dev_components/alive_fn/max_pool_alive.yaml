@@ -1,0 +1,3 @@
+_target_: src.nn.ca.MaxPoolAlive
+alive_threshold: 0.1
+alive_bit: 3

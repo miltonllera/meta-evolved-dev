@@ -1,0 +1,7 @@
+_target_: src.evo.qd.QDScoreAggregator
+metric_aggregator: ${get_fn:src.evo.qd.qd_score_x_coverage}
+genotype_to_phenotype_evaluator:
+  _target_: src.evo.qd.genotype_to_phenotype_pairwise_dissimilarity_difference
+  _partial_: True
+  diss_fn: ${get_fn:src.evo.qd.edit_distance}
+reg_coef: 100

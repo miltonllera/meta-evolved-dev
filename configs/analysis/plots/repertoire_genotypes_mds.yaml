@@ -1,0 +1,5 @@
+repertoire_genotypes_mds:
+  _target_: src.analysis.qd.plot_repertoire_mds
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}/encoding_space_plots/"
+  distance: edit

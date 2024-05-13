@@ -1,0 +1,4 @@
+dna_compositionality_analysis:
+  _target_: src.analysis.dna.dna_compositionality_metrics
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}/"

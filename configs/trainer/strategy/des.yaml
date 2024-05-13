@@ -1,0 +1,16 @@
+defaults:
+    - base
+
+strategy: DES
+args:
+  temperature: 12.5
+  sigma_init: 0.1
+  mean_decay: 0.0
+
+strategy_params:
+  lrate_sigma: 0.1  # Learning rate for population std
+  lrate_mean: 1.0  # Learning rate for population mean
+  init_min: -0.01
+  init_max: 0.01
+  clip_min: -0.1
+  clip_max: 0.1

@@ -1,0 +1,13 @@
+defaults:
+    - base
+
+strategy: CMA_ES
+args:
+  elite_ratio: 0.5
+  sigma_init: 0.1
+
+strategy_params:
+  init_min: -0.01
+  init_max: 0.01
+  clip_min: -0.1
+  clip_max: 0.1

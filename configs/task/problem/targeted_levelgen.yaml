@@ -1,0 +1,6 @@
+_target_: src.problem.levelgen.TargetedLevelGeneration
+height: ???
+width: ???
+target_path_length: ???
+target_symmetry: ???
+descriptor_weight: 1.0

@@ -1,0 +1,23 @@
+defaults:
+  - /model@dev: nca
+  - /model/dev_components/context_generator@dna_generator: vector_sampler
+  - override /model/dev_components/context_encoder@dev.context_encoder: mlp_encoder
+  - override /model/dev_components/control_fn@dev.control_fn: mlp_control
+  - _self_
+
+_target_: src.model.dev.DNAGuidedDevModel
+
+dev:
+  dev_steps: [46, 96]
+  state_size: 16
+  grid_size: ???  # set in each experiment
+  update_prob: 0.5
+  output_dev_steps: False
+
+  context_encoder:
+    context_size: ${...dna_generator.goal_size}
+    embedding_size: ${...dna_generator.goal_size}
+
+  control_fn:
+    context_size: ${..context_encoder.embedding_size}
+    state_size: ${..state_size}

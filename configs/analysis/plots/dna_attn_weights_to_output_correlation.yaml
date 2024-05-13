@@ -1,0 +1,4 @@
+dna_attn_weights_to_output_correlation:
+  _target_: src.analysis.dna.dna_attn_weights_to_output_correlation
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}/dna_stat_models/"

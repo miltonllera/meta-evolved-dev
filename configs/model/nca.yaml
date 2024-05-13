@@ -1,0 +1,23 @@
+# NCA implemented as an equinox model
+# Note that Equinox moduls require a Jax PRNG key at instantiation time for some layers. For this
+# we use the resolver 'prng_key'. However, this may make exact replication slightly difficult
+# since the value of the rng depends on the experiment seed.
+defaults:
+  - _self_
+  - /model/dev_components/context_encoder@context_encoder: fixed_context
+  - /model/dev_components/control_fn@control_fn: id_control
+  - /model/dev_components/alive_fn@alive_fn: max_pool_alive
+  - /model/dev_components/message_fn@message_fn: id_and_sobel_message
+  - /model/dev_components/update_fn@update_fn: unbounded_updates
+  - state_norm: null
+
+_target_: src.model.dev.NCA
+
+dev_steps: [46, 96]
+state_size: 16
+grid_size: ???  # set in each experiment
+update_prob: 0.5
+output_dev_steps: False
+
+output_decoder: null
+# state_norm: null

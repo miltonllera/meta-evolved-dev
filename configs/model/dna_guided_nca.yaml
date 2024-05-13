@@ -1,0 +1,22 @@
+defaults:
+  - _self_
+  - /model@dev: nca
+  - /model/dev_components/context_generator@dna_generator: dna_iid_sampler
+  - override /model/dev_components/context_encoder@dev.context_encoder: dna_encoder
+  - override /model/dev_components/control_fn@dev.control_fn: dna_control
+
+_target_: src.model.dev.DNAGuidedDevModel
+
+dev:
+  dev_steps: [46, 96]
+  state_size: 16
+  grid_size: ???  # set in each experiment
+  update_prob: 0.5
+  output_dev_steps: False
+
+  context_encoder:
+    alphabet_size: ${...dna_generator.alphabet_size}
+    sequence_length: ${...dna_generator.sequence_length}
+
+  control_fn:
+    state_size: ${..state_size}

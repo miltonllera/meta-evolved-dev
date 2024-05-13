@@ -1,0 +1,6 @@
+_target_: src.nn.ca.MLPContextEncoder
+context_size: ???
+embedding_size: ???
+mlp_depth: 1
+mlp_width_factor: 2
+key: ${prng_key:}

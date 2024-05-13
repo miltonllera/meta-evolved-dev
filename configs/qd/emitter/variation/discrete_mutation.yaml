@@ -1,0 +1,8 @@
+_target_: src.evo.operators.discrete_mutation
+_partial_: True
+
+# TODO: These are hardcoded but should depend on the DNA
+mutation_prob: 0.125
+min_val: 0
+max_val: 3
+force_mutation: True  # Force at least one index to change. Useful for small DNA strings.

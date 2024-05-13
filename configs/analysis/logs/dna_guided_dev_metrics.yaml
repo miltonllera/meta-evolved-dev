@@ -1,0 +1,6 @@
+dna_guided_dev_metrics:
+  _target_: src.analysis.dna.log_qd_metrics
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}"
+  # save_dir: "${run_path}/analysis/${checkpoint_file}/no_crossover_emitter_test"
+  # save_dir: "${run_path}/analysis/${checkpoint_file}/no_mutation_emitter_test"

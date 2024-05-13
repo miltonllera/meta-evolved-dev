@@ -1,0 +1,4 @@
+_target_: src.problem.catgen.CategoricalQDProblem
+n_classes: 1000
+eval_fn:
+  _target_: src.model.flax.utils.load_pretrained_imagenet_model

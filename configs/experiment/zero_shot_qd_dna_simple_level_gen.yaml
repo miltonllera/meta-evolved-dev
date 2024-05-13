@@ -1,0 +1,72 @@
+#@package _global_
+
+defaults:
+  - /trainer: evo
+  - /trainer/strategy: cmaes
+
+  - /task: zero_shot_dna_qd
+  - /task/problem@task.problem: simple_level_gen
+  # - /qd/score_aggregator@task.score_aggregator: score_plus_pairwise_consistency
+
+  - /model: dgn_level_gen
+
+  - /callbacks@callbacks.best_checkpoint: best_checkpoint
+  - /callbacks@callbacks.periodic_checkpoint: periodic_checkpoint
+  - override /logger: wandb
+  - _self_
+
+
+tags: ["dnaqd", "simple_level_gen", "nca_dna", "evo"]
+
+model:
+  dev:
+    dev_steps: 50
+    grid_size: ["${task.problem.height}", "${task.problem.width}"]
+  dna_generator:
+    sequence_length: 8
+    alphabet_size: 4
+
+task:
+  popsize: 200  # number of initial dnas
+  n_centroids: 1000
+
+  problem:
+    height: 16
+    width: 16
+
+trainer:
+  steps: 10000
+  val_freq: null  # Validation is not required
+  # val_steps: 1
+
+  strategy:
+    args:
+      popsize: 100
+      maximize: True
+
+    strategy_params:
+      init_min: -0.1
+      init_max: 0.1
+      clip_min: -1
+      clip_max: 1
+
+callbacks:
+  best_checkpoint:
+    monitor_key: train/fitness_mean
+    mode: max
+    run_on: train_iter_end
+    state_getter:
+      _target_: src.evo.utils.ModelFromState
+      member_to_extract: "mean"
+
+  periodic_checkpoint:
+    checkpoint_freq: 20
+    max_checkpoints: null
+    state_getter:
+      _target_: src.evo.utils.ModelFromState
+      member_to_extract: "mean"
+
+logger:
+  wandb:
+    project: level-generation
+    name: zero_shot_simple-level_${now:%Y-%m-%d}_${now:%H-%M}

@@ -1,0 +1,8 @@
+dna_distribution_comparison:
+  _target_: src.analysis.dna.dna_distribution_comparison
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}/dna_distribution_comparison/"
+  iterations_to_plot: null
+  proj_kwargs:
+    perplexity: 20
+    learning_rate: 5

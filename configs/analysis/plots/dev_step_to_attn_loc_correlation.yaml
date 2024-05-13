@@ -1,0 +1,6 @@
+dev_step_to_attn_loc_correlation:
+  _target_: src.analysis.dna.compute_dev_step_to_attn_loc_correlation
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}/attn_corr/"
+  iterations_to_plot: null
+  k: 1

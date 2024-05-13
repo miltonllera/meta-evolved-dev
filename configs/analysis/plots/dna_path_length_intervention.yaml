@@ -1,0 +1,4 @@
+dna_path_length_intervention:
+  _target_: src.analysis.dna.dna_path_length_intervention
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}/dna_maps/"

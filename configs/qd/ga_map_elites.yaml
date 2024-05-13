@@ -1,0 +1,4 @@
+defaults:
+  - map_elites
+  - emitter: mixing_emitter
+  - _self_

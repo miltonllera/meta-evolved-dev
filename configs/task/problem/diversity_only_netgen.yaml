@@ -1,0 +1,2 @@
+_target_: src.problem.netgen.DiversityOnlyNetworkGeneration
+max_nodes: 10

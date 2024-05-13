@@ -1,0 +1,9 @@
+defaults:
+  - variation@variation_fn: polynomial_crossover
+  - variation@mutation_fn: discrete_mutation
+
+_target_: src.evo.qd.MixingEmitter
+
+# mutation_fn: None
+variation_percentage: 0.5  # by default half crossover, half mutation
+batch_size: 100  # this is the population size

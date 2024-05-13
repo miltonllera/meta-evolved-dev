@@ -1,0 +1,15 @@
+defaults:
+  - base
+
+strategy: DiscreteGA
+args:
+  popsize: 100
+  elite_ratio: 1.5
+  min_val: 0.0
+  max_val: 1.0
+  variation_percentage: 0.5
+  cross_over_ratio: 0.5
+  mutation_prob: null
+  maximize: True
+
+strategy_params: {}

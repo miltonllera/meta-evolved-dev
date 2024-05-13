@@ -1,0 +1,30 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - logger: tensorboard
+  - paths: default
+  - hydra: default
+  # - callbacks: default
+
+  # Set an experiment with all the above set to specific values
+  - experiment: null
+
+  # Hyperparemeter optimization
+  - hparams_search: null
+
+task_name: train
+
+tags: ["dev"]
+
+trainer: ???
+
+model: ???
+
+task: ???
+
+seed: ${seed_from_timestamp:}
+
+ckpt_path: null  # path to resume training
+
+disable_jit: False

@@ -1,0 +1,14 @@
+defaults:
+  - optim: adam
+  - _self_
+
+_target_: src.trainer.backprop.BackpropTrainer
+
+steps: 10000
+val_steps: 100
+val_freq: 1000
+use_progress_bar: True
+
+task: ???
+optim:
+  learning_rate: 2e-3

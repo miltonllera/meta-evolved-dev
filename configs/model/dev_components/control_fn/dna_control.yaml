@@ -1,0 +1,5 @@
+_target_: src.nn.dna.DNAControl
+n_heads: 1
+state_size: ???
+dna_emb_size: 16
+key: ${prng_key:}

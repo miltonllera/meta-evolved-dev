@@ -1,0 +1,8 @@
+dna_attention_max:
+  _target_: src.analysis.dna.plot_dna_decoding_sequence
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}/dna_sequence/"
+  iterations_to_plot: null
+  reduction: maxchar
+  plot_kws:
+    k: 0

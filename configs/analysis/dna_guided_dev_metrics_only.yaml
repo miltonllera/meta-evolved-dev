@@ -1,0 +1,12 @@
+#@package _global_
+defaults:
+  - /analysis/logs/dna_guided_dev_metrics@analysis
+  # - /analysis/logs/achieved_quality_ratio@analysis
+  # - /analysis/plots/dna_compositionality@analysis
+
+tags: ["dnaqd", "simple_level_gen", "nca_dna", "evo"]
+
+overrides:
+  model:
+    dev:
+      output_dev_steps: True

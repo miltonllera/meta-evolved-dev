@@ -1,0 +1,17 @@
+_target_: equinox.nn.Sequential
+layers:
+  - _target_: equinox.nn.Conv2d
+    in_channels: ${....state_size}
+    out_channels: ${prod:${....state_size},3}
+    kernel_size: [3, 3]
+    padding: 1
+    key: ${prng_key:}
+  - _target_: equinox.nn.Lambda
+    fn: ${get_fn:jax.nn.relu}
+  - _target_: equinox.nn.Conv2d
+    in_channels: ${prod:${....state_size},3}
+    out_channels: ${prod:${....state_size},3}
+    kernel_size: [1, 1]
+    key: ${prng_key:}
+  - _target_: equinox.nn.Lambda
+    fn: ${get_fn:jax.nn.relu}

@@ -1,0 +1,6 @@
+achieved_quality_ratio:
+  _target_: src.analysis.qd.compute_achieved_quality_ratios
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}"
+  minimum_quality: 128
+  maximum_quality: 255

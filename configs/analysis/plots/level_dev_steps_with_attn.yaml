@@ -1,0 +1,5 @@
+plot_level_dev_with_attention:
+  _target_: src.analysis.levelgen.plot_level_dev_with_attention
+  _partial_: True
+  save_dir: "${run_path}/analysis/${checkpoint_file}/generated_levels/"
+  dev_steps_to_plot: null
